@@ -26,23 +26,63 @@ async function loadProducts() {
     }
 }
 
+// Add currency formatting function
+function formatPrice(priceInSYP, priceInUSD) {
+    const sypFormatted = new Intl.NumberFormat('ar-SY', {
+        style: 'currency',
+        currency: 'SYP',
+        minimumFractionDigits: 0
+    }).format(priceInSYP);
+    
+    return `
+        <div class="price-container">
+            <div class="price-syp">${sypFormatted}</div>
+            <div class="price-usd text-muted">($${priceInUSD})</div>
+        </div>
+    `;
+}
+
+// Add stock status function
+function getStockStatus(stock) {
+    if (stock > 10) {
+        return '<span class="badge bg-success">متوفر</span>';
+    } else if (stock > 0) {
+        return `<span class="badge bg-warning text-dark">متبقي ${stock}</span>`;
+    } else {
+        return '<span class="badge bg-danger">نفد المخزون</span>';
+    }
+}
+
 function displayProducts(products) {
     const container = document.getElementById('products-container');
     container.innerHTML = '';
     
     products.forEach(product => {
+        const isOutOfStock = product.stock === 0;
         const productCard = `
-            <div class="col-md-4">
-                <div class="card product-card">
-                    <img src="${product.image}" class="card-img-top" alt="${product.name}" 
-                         onerror="handleImageError(this)">
-                    <div class="card-body">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card product-card h-100 ${isOutOfStock ? 'out-of-stock' : ''}">
+                    <div class="image-container">
+                        <img src="${product.image}" class="card-img-top" alt="${product.name}" 
+                             onerror="handleImageError(this)">
+                        ${isOutOfStock ? '<div class="out-of-stock-overlay">نفد المخزون</div>' : ''}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="product-category">
+                            <small class="text-muted">${product.category}</small>
+                        </div>
                         <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text">${product.description}</p>
-                        <p class="price">$${product.price}</p>
-                        <p class="text-muted">متوفر: ${product.stock}</p>
-                        <button class="btn btn-add-cart w-100" onclick="addToCart(${product.id})">
-                            أضف للسلة
+                        <p class="card-text flex-grow-1">${product.description}</p>
+                        <div class="product-price mb-2">
+                            ${formatPrice(product.price, product.priceUSD)}
+                        </div>
+                        <div class="stock-status mb-3">
+                            ${getStockStatus(product.stock)}
+                        </div>
+                        <button class="btn btn-add-cart w-100 mt-auto" 
+                                onclick="addToCart(${product.id})"
+                                ${isOutOfStock ? 'disabled' : ''}>
+                            ${isOutOfStock ? 'غير متوفر' : 'أضف للسلة'}
                         </button>
                     </div>
                 </div>
@@ -125,7 +165,8 @@ async function loadCartItems() {
     }
     
     let cartHTML = '';
-    let total = 0;
+    let totalSYP = 0;
+    let totalUSD = 0;
     
     // Load product details for each cart item
     for (const cartItem of cart) {
@@ -135,8 +176,10 @@ async function loadCartItems() {
             
             if (data.success) {
                 const product = data.product;
-                const itemTotal = product.price * cartItem.quantity;
-                total += itemTotal;
+                const itemTotalSYP = product.price * cartItem.quantity;
+                const itemTotalUSD = product.priceUSD * cartItem.quantity;
+                totalSYP += itemTotalSYP;
+                totalUSD += itemTotalUSD;
                 
                 cartHTML += `
                     <div class="row cart-item mb-3 p-3 border rounded" data-product-id="${product.id}">
@@ -149,7 +192,7 @@ async function loadCartItems() {
                             <p class="text-muted small">${product.description}</p>
                         </div>
                         <div class="col-md-2">
-                            <p class="mb-0">$${product.price}</p>
+                            ${formatPrice(product.price, product.priceUSD)}
                         </div>
                         <div class="col-md-2">
                             <div class="quantity-controls d-flex align-items-center">
@@ -159,7 +202,7 @@ async function loadCartItems() {
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <p class="mb-0 fw-bold">$${itemTotal}</p>
+                            ${formatPrice(itemTotalSYP, itemTotalUSD)}
                             <button class="btn btn-sm btn-danger mt-1" onclick="removeFromCart(${product.id})">حذف</button>
                         </div>
                     </div>
@@ -171,9 +214,17 @@ async function loadCartItems() {
     }
     
     container.innerHTML = cartHTML;
+    
+    const sypTotal = new Intl.NumberFormat('ar-SY', {
+        style: 'currency',
+        currency: 'SYP',
+        minimumFractionDigits: 0
+    }).format(totalSYP);
+    
     totalContainer.innerHTML = `
         <div class="text-end">
-            <h5>المجموع الكلي: <span class="text-success">$${total}</span></h5>
+            <h5>المجموع الكلي: <span class="text-success">${sypTotal}</span></h5>
+            <p class="text-muted">($${totalUSD})</p>
         </div>
     `;
 }

@@ -1,8 +1,13 @@
 // Global cart variable
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let allProducts = []; // Store all products for filtering
 
 // Load products on page load
-document.addEventListener('DOMContentLoaded', loadProducts);
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    setupCategoryFilters();
+    setupNavbarEffects();
+});
 
 // Handle image loading errors
 function handleImageError(img) {
@@ -15,15 +20,64 @@ function handleImageError(img) {
 
 async function loadProducts() {
     try {
+        // Hide loading indicator initially
+        document.getElementById('loading-indicator').style.display = 'block';
+        
         const response = await fetch('/api/products');
         const data = await response.json();
         
         if (data.success) {
-            displayProducts(data.products);
+            allProducts = data.products;
+            displayProducts(allProducts);
         }
+        
+        // Hide loading indicator
+        document.getElementById('loading-indicator').style.display = 'none';
     } catch (error) {
         console.error('Error loading products:', error);
+        document.getElementById('loading-indicator').style.display = 'none';
     }
+}
+
+// Setup category filtering
+function setupCategoryFilters() {
+    const categoryButtons = document.querySelectorAll('.category-filter');
+    
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            // Update active button
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            // Filter products
+            const category = e.target.dataset.category;
+            if (category === 'all') {
+                displayProducts(allProducts);
+            } else {
+                const filteredProducts = allProducts.filter(product => product.category === category);
+                displayProducts(filteredProducts);
+            }
+        });
+    });
+}
+
+// Setup navbar scroll effects
+function setupNavbarEffects() {
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add/remove shadow based on scroll position
+        if (scrollTop > 10) {
+            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+        } else {
+            navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
 }
 
 // Add currency formatting function
@@ -53,38 +107,96 @@ function getStockStatus(stock) {
     }
 }
 
+// Otto-style price formatting
+function formatPriceOtto(priceInSYP, priceInUSD) {
+    const sypFormatted = new Intl.NumberFormat('ar-SY', {
+        style: 'currency',
+        currency: 'SYP',
+        minimumFractionDigits: 0
+    }).format(priceInSYP);
+    
+    return `
+        <span>${sypFormatted}</span>
+        <div class="otto-price-usd">($${priceInUSD})</div>
+    `;
+}
+
+// Otto-style stock status
+function getStockStatusOtto(stock) {
+    if (stock > 10) {
+        return '<span class="otto-stock-badge otto-stock-available">متوفر</span>';
+    } else if (stock > 0) {
+        return `<span class="otto-stock-badge otto-stock-low">متبقي ${stock}</span>`;
+    } else {
+        return '<span class="otto-stock-badge otto-stock-out">نفد المخزون</span>';
+    }
+}
+
+// Get brand name from category
+function getBrandFromCategory(category) {
+    const brandMap = {
+        'العناية بالبشرة': 'GARNIER',
+        'مكياج العيون': 'MAYBELLINE', 
+        'أحمر الشفاه': 'L\'OREAL',
+        'العطور': 'CHANEL',
+        'العناية بالشعر': 'PANTENE'
+    };
+    return brandMap[category] || 'WOW';
+}
+
 function displayProducts(products) {
     const container = document.getElementById('products-container');
+    
+    if (products.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <h5>لا توجد منتجات في هذه الفئة</h5>
+                    <p>جربي البحث في فئة أخرى</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
     container.innerHTML = '';
     
     products.forEach(product => {
         const isOutOfStock = product.stock === 0;
+        const isPopular = product.stock > 15; // Assume popular if high stock
+        const isOnSale = product.priceUSD < 20; // Simple sale logic
+        
         const productCard = `
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="card product-card h-100 ${isOutOfStock ? 'out-of-stock' : ''}">
-                    <div class="image-container">
-                        <img src="${product.image}" class="card-img-top" alt="${product.name}" 
-                             onerror="handleImageError(this)">
-                        ${isOutOfStock ? '<div class="out-of-stock-overlay">نفد المخزون</div>' : ''}
+            <div class="otto-product-card ${isOutOfStock ? 'out-of-stock' : ''}">
+                <div class="otto-product-image">
+                    <img src="${product.image}" alt="${product.name}" 
+                         onerror="handleImageError(this)">
+                    ${isOutOfStock ? '<div class="out-of-stock-overlay">نفد المخزون</div>' : ''}
+                    ${isPopular ? '<div class="otto-badge-popular">مشهور</div>' : ''}
+                    ${isOnSale ? '<div class="otto-badge-sale">تخفيض</div>' : ''}
+                </div>
+                
+                <div class="otto-product-info">
+                    <div class="otto-product-brand">${getBrandFromCategory(product.category)}</div>
+                    <h6 class="otto-product-title">${product.name}</h6>
+                    <p class="otto-product-description">${product.description}</p>
+                    
+                    <div class="otto-price-container">
+                        <div class="otto-price-current">
+                            ${formatPriceOtto(product.price, product.priceUSD)}
+                        </div>
                     </div>
-                    <div class="card-body d-flex flex-column">
-                        <div class="product-category">
-                            <small class="text-muted">${product.category}</small>
-                        </div>
-                        <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text flex-grow-1">${product.description}</p>
-                        <div class="product-price mb-2">
-                            ${formatPrice(product.price, product.priceUSD)}
-                        </div>
-                        <div class="stock-status mb-3">
-                            ${getStockStatus(product.stock)}
-                        </div>
-                        <button class="btn btn-add-cart w-100 mt-auto" 
-                                onclick="addToCart(${product.id})"
-                                ${isOutOfStock ? 'disabled' : ''}>
-                            ${isOutOfStock ? 'غير متوفر' : 'أضف للسلة'}
-                        </button>
+                </div>
+                
+                <div class="otto-product-actions">
+                    <div class="otto-stock-status">
+                        ${getStockStatusOtto(product.stock)}
                     </div>
+                    <button class="otto-btn-add-cart" 
+                            onclick="addToCart(${product.id})"
+                            ${isOutOfStock ? 'disabled' : ''}>
+                        ${isOutOfStock ? 'غير متوفر' : 'أضف للسلة'}
+                    </button>
                 </div>
             </div>
         `;
@@ -237,14 +349,26 @@ function showCartModal() {
 // Update cart count on page load
 updateCartCount();
 
+// Add smooth scroll to top functionality
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
 // Toast notification function
+// Enhanced toast notification positioning (account for fixed navbar)
 function showToast(message, type = 'info') {
     // Create toast container if it doesn't exist
     let toastContainer = document.getElementById('toast-container');
     if (!toastContainer) {
         toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
-        toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+        toastContainer.className = 'toast-container position-fixed p-3';
+        // Position below fixed navbar
+        toastContainer.style.top = '90px';
+        toastContainer.style.right = '15px';
         toastContainer.style.zIndex = '9999';
         document.body.appendChild(toastContainer);
     }

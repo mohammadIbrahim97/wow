@@ -2,63 +2,83 @@
 let products = [
   {
     id: 1,
-    name: 'Samsung Galaxy A54',
-    price: 850000, // SYP
-    priceUSD: 340,
-    description: 'هاتف ذكي متطور مع كاميرا عالية الجودة ومعالج قوي',
-    image: '/images/products/samsung-a54.jpg',
-    stock: 15,
-    category: 'هواتف ذكية'
+    name: 'سيروم فيتامين سي',
+    price: 125000, // SYP
+    priceUSD: 50,
+    description: 'سيروم مضاد للأكسدة يحتوي على فيتامين سي لإشراق البشرة وتوحيد لونها',
+    image: '/images/products/vitamin-c-serum.jpg',
+    stock: 25,
+    category: 'العناية بالبشرة'
   },
   {
     id: 2,
-    name: 'iPhone 13',
-    price: 2500000, // SYP
-    priceUSD: 1000,
-    description: 'آيفون 13 - أداء استثنائي وكاميرا احترافية',
-    image: '/images/products/iphone-13.jpg',
-    stock: 8,
-    category: 'هواتف ذكية'
+    name: 'كريم مرطب للوجه',
+    price: 87500, // SYP
+    priceUSD: 35,
+    description: 'كريم مرطب يومي للبشرة الجافة والحساسة مع حماية من أشعة الشمس',
+    image: '/images/products/face-moisturizer.jpg',
+    stock: 30,
+    category: 'العناية بالبشرة'
   },
   {
     id: 3,
-    name: 'Xiaomi Redmi Note 12',
-    price: 625000, // SYP
-    priceUSD: 250,
-    description: 'هاتف ذكي اقتصادي بمواصفات ممتازة وبطارية تدوم طويلاً',
-    image: '/images/products/xiaomi-redmi-note12.jpg',
-    stock: 20,
-    category: 'هواتف ذكية'
+    name: 'أحمر شفاه مات',
+    price: 62500, // SYP
+    priceUSD: 25,
+    description: 'أحمر شفاه بتركيبة مقاومة للماء وثبات يدوم طوال اليوم',
+    image: '/images/products/matte-lipstick.jpg',
+    stock: 18,
+    category: 'أحمر الشفاه'
   },
   {
     id: 4,
-    name: 'سماعات AirPods Pro',
-    price: 875000, // SYP
-    priceUSD: 350,
-    description: 'سماعات لاسلكية مع إلغاء الضوضاء وجودة صوت عالية',
-    image: '/images/products/airpods-pro.jpg',
-    stock: 12,
-    category: 'إكسسوارات'
+    name: 'ماسكارا مكثفة',
+    price: 75000, // SYP
+    priceUSD: 30,
+    description: 'ماسكارا لتكثيف وإطالة الرموش مع تركيبة مقاومة للتلطخ',
+    image: '/images/products/volume-mascara.jpg',
+    stock: 22,
+    category: 'مكياج العيون'
   },
   {
     id: 5,
-    name: 'ساعة Apple Watch SE',
-    price: 1250000, // SYP
-    priceUSD: 500,
-    description: 'ساعة ذكية متطورة لتتبع الصحة واللياقة البدنية',
-    image: '/images/products/apple-watch-se.jpg',
-    stock: 6,
-    category: 'ساعات ذكية'
+    name: 'بودرة الأساس',
+    price: 100000, // SYP
+    priceUSD: 40,
+    description: 'بودرة مضغوطة لتغطية مثالية وثبات طويل الأمد مناسبة لجميع أنواع البشرة',
+    image: '/images/products/foundation-powder.jpg',
+    stock: 15,
+    category: 'كريم الأساس'
   },
   {
     id: 6,
-    name: 'شاحن محمول Anker 20000mAh',
+    name: 'عطر نسائي فرنسي',
     price: 187500, // SYP
     priceUSD: 75,
-    description: 'شاحن محمول بسعة كبيرة وشحن سريع لجميع الأجهزة',
-    image: '/images/products/anker-powerbank.jpg',
-    stock: 25,
-    category: 'إكسسوارات'
+    description: 'عطر نسائي راقي برائحة الورد والياسمين يدوم لساعات طويلة',
+    image: '/images/products/french-perfume.jpg',
+    stock: 12,
+    category: 'العطور'
+  },
+  {
+    id: 7,
+    name: 'شامبو للشعر الجاف',
+    price: 50000, // SYP
+    priceUSD: 20,
+    description: 'شامبو مغذي للشعر الجاف والتالف مع زيت الأرغان والكيراتين',
+    image: '/images/products/dry-hair-shampoo.jpg',
+    stock: 35,
+    category: 'العناية بالشعر'
+  },
+  {
+    id: 8,
+    name: 'كريم مزيل العرق',
+    price: 37500, // SYP
+    priceUSD: 15,
+    description: 'مزيل عرق طبيعي خالي من الألومنيوم برائحة منعشة تدوم 24 ساعة',
+    image: '/images/products/deodorant-cream.jpg',
+    stock: 40,
+    category: 'العناية الشخصية'
   }
 ];
 

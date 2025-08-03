@@ -1,37 +1,390 @@
+/* Otto-inspired Design System */
+:root {
+    --otto-red: #E60028;
+    --otto-dark-red: #CC0022;
+    --otto-light-gray: #F5F5F5;
+    --otto-medium-gray: #CCCCCC;
+    --otto-dark-gray: #666666;
+    --otto-text-dark: #333333;
+    --otto-white: #FFFFFF;
+    --otto-border: #E5E5E5;
+    --otto-success: #00B894;
+    --otto-warning: #FDCB6E;
+    --otto-danger: #E17055;
+}
+
+/* Reset and Base Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--otto-light-gray);
+    margin: 0;
+    padding: 0;
+    color: var(--otto-text-dark);
+    line-height: 1.6;
 }
 
-.product-card {
+/* Otto Header */
+.otto-header {
+    background-color: var(--otto-white);
+    border-bottom: 1px solid var(--otto-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.otto-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--otto-red);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.search-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.otto-search {
+    border: 2px solid var(--otto-medium-gray);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 14px;
+}
+
+.otto-search:focus {
+    border-color: var(--otto-red);
+    box-shadow: none;
+    outline: none;
+}
+
+.otto-search-btn {
+    background-color: var(--otto-red);
+    border: 2px solid var(--otto-red);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 0 4px 4px 0;
+}
+
+.otto-search-btn:hover {
+    background-color: var(--otto-dark-red);
+    border-color: var(--otto-dark-red);
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--otto-dark-gray);
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
     transition: all 0.3s ease;
-    margin-bottom: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    text-decoration: none;
+}
+
+.header-icon:hover {
+    background-color: var(--otto-light-gray);
+    color: var(--otto-red);
+}
+
+.otto-badge {
+    background-color: var(--otto-red) !important;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+}
+
+/* Otto Navigation */
+.otto-nav {
+    background-color: var(--otto-white);
+    border-bottom: 1px solid var(--otto-border);
+    padding: 8px 0;
+}
+
+.otto-nav-pills .nav-link {
+    color: var(--otto-dark-gray);
+    padding: 8px 16px;
+    margin: 0 4px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.otto-nav-pills .nav-link:hover {
+    color: var(--otto-red);
+    background-color: rgba(230, 0, 40, 0.1);
+}
+
+.otto-nav-pills .nav-link.active {
+    background-color: var(--otto-red);
+    color: white;
+}
+
+/* Otto Main Layout */
+.otto-main {
+    min-height: calc(100vh - 120px);
+}
+
+.otto-sidebar {
+    background-color: var(--otto-white);
+    padding: 20px 15px;
+    border-right: 1px solid var(--otto-border);
+}
+
+.otto-breadcrumb {
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+}
+
+.otto-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+    color: var(--otto-medium-gray);
+}
+
+.otto-breadcrumb a {
+    color: var(--otto-red);
+    text-decoration: none;
+}
+
+.sidebar-title {
+    font-weight: bold;
+    color: var(--otto-text-dark);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--otto-border);
+}
+
+.otto-category-list li {
+    margin-bottom: 8px;
+}
+
+.otto-category-list a {
+    color: var(--otto-dark-gray);
+    text-decoration: none;
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.otto-category-list a:hover,
+.otto-category-list a.active {
+    color: var(--otto-red);
+    font-weight: 500;
+}
+
+.otto-category-list .count {
+    color: var(--otto-medium-gray);
+    font-size: 12px;
+}
+
+.content-header {
+    padding: 20px 15px 0;
+}
+
+.otto-page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--otto-text-dark);
+    margin-bottom: 5px;
+}
+
+.otto-subtitle {
+    color: var(--otto-dark-gray);
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+/* Otto Products Grid */
+.otto-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 15px;
+}
+
+/* Otto Product Cards */
+.otto-product-card {
+    background-color: var(--otto-white);
+    border: 1px solid var(--otto-border);
+    border-radius: 8px;
     overflow: hidden;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    border-color: #007bff;
-}
-
-.image-container {
+    transition: all 0.3s ease;
     position: relative;
-    height: 250px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.otto-product-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.otto-product-image {
+    position: relative;
+    height: 200px;
     overflow: hidden;
 }
 
-.image-container img {
+.otto-product-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.product-card:hover .image-container img {
+.otto-product-card:hover .otto-product-image img {
     transform: scale(1.05);
+}
+
+.otto-badge-popular {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: var(--otto-red);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.otto-badge-sale {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: var(--otto-danger);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.otto-product-info {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.otto-product-brand {
+    font-size: 12px;
+    color: var(--otto-dark-gray);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.otto-product-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--otto-text-dark);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.otto-product-description {
+    font-size: 12px;
+    color: var(--otto-dark-gray);
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.3;
+}
+
+.otto-price-container {
+    margin-top: auto;
+}
+
+.otto-price-current {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--otto-red);
+    margin-bottom: 5px;
+}
+
+.otto-price-original {
+    font-size: 13px;
+    color: var(--otto-dark-gray);
+    text-decoration: line-through;
+    margin-left: 8px;
+}
+
+.otto-price-usd {
+    font-size: 11px;
+    color: var(--otto-dark-gray);
+    margin-top: 2px;
+}
+
+.otto-product-actions {
+    padding: 15px;
+    border-top: 1px solid var(--otto-border);
+}
+
+.otto-btn-add-cart {
+    width: 100%;
+    background-color: var(--otto-red);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.otto-btn-add-cart:hover:not(:disabled) {
+    background-color: var(--otto-dark-red);
+    transform: translateY(-1px);
+}
+
+.otto-btn-add-cart:disabled {
+    background-color: var(--otto-medium-gray);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.otto-stock-status {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.otto-stock-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.otto-stock-available {
+    background-color: rgba(0, 184, 148, 0.1);
+    color: var(--otto-success);
+}
+
+.otto-stock-low {
+    background-color: rgba(253, 203, 110, 0.1);
+    color: var(--otto-warning);
+}
+
+.otto-stock-out {
+    background-color: rgba(225, 112, 85, 0.1);
+    color: var(--otto-danger);
 }
 
 .out-of-stock-overlay {
@@ -46,143 +399,136 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 14px;
 }
 
-.product-card.out-of-stock {
+.otto-product-card.out-of-stock {
     opacity: 0.7;
 }
 
-.product-category {
-    margin-bottom: 8px;
+/* Loading Spinner */
+.otto-spinner {
+    color: var(--otto-red);
 }
 
-.card-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    line-height: 1.3;
-}
-
-.card-text {
-    font-size: 0.9rem;
-    color: #6c757d;
-    line-height: 1.4;
-}
-
-/* Price Styling */
-.product-price {
-    text-align: center;
-}
-
-.price-container {
-    border: 2px solid #e8f5e8;
-    border-radius: 8px;
-    padding: 8px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%);
-}
-
-.price-syp {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #28a745;
-    direction: rtl;
-}
-
-.price-usd {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-top: 2px;
-}
-
-/* Stock Status */
-.stock-status {
-    text-align: center;
-}
-
-.badge {
-    font-size: 0.85rem;
-    padding: 6px 12px;
-}
-
-/* Button Styling */
-.btn-add-cart {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
-}
-
-.btn-add-cart:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-    background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
-}
-
-.btn-add-cart:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-/* Mobile Responsiveness - Critical for Syrian users */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .product-card {
-        margin-bottom: 15px;
+    .otto-header .container-fluid .row {
+        --bs-gutter-x: 0.5rem;
     }
     
-    .image-container {
-        height: 200px;
+    .otto-logo {
+        font-size: 1.5rem;
     }
     
-    .card-title {
-        font-size: 1rem;
+    .search-container {
+        max-width: 100%;
     }
     
-    .card-text {
-        font-size: 0.85rem;
+    .header-icon span {
+        display: none !important;
     }
     
-    .price-syp {
-        font-size: 1.1rem;
+    .otto-nav-pills {
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
     
-    .btn-add-cart {
-        padding: 10px 15px;
-        font-size: 0.9rem;
+    .otto-nav-pills .nav-link {
+        font-size: 13px;
+        padding: 6px 12px;
+        margin: 2px;
     }
     
-    /* Ensure cards stack properly on mobile */
-    .col-lg-4.col-md-6.col-sm-12 {
-        padding-left: 8px;
-        padding-right: 8px;
+    .otto-sidebar {
+        display: none;
+    }
+    
+    .otto-products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        padding: 15px 10px;
+    }
+    
+    .otto-product-image {
+        height: 150px;
+    }
+    
+    .otto-product-info {
+        padding: 12px;
+    }
+    
+    .otto-product-actions {
+        padding: 12px;
     }
 }
 
 @media (max-width: 576px) {
-    .container {
-        padding-left: 10px;
-        padding-right: 10px;
+    .otto-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px 5px;
     }
     
-    .image-container {
-        height: 180px;
+    .otto-product-image {
+        height: 140px;
     }
     
-    .card-body {
-        padding: 15px;
+    .otto-product-info {
+        padding: 10px;
     }
     
-    .price-syp {
-        font-size: 1rem;
+    .otto-product-actions {
+        padding: 10px;
     }
     
-    .price-usd {
-        font-size: 0.8rem;
+    .otto-btn-add-cart {
+        padding: 8px 12px;
+        font-size: 13px;
     }
+}
+
+/* Category Filter Buttons (Mobile Fallback) */
+.category-filter {
+    background: none;
+    border: 1px solid var(--otto-border);
+    color: var(--otto-dark-gray);
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    margin: 2px;
+    display: inline-block;
+}
+
+.category-filter:hover,
+.category-filter.active {
+    background-color: var(--otto-red);
+    border-color: var(--otto-red);
+    color: white;
+}
+
+/* Legacy Support for existing JavaScript */
+.product-card {
+    display: none; /* Hide old cards */
+}
+
+.btn-add-cart {
+    background-color: var(--otto-red);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-add-cart:hover:not(:disabled) {
+    background-color: var(--otto-dark-red);
+}
+
+.btn-add-cart:disabled {
+    background-color: var(--otto-medium-gray);
+    cursor: not-allowed;
 }

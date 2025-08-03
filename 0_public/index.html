@@ -3,49 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر WOW - أفضل المنتجات التقنية في سوريا</title>
-    <meta name="description" content="متجر WOW للإلكترونيات - هواتف ذكية، إكسسوارات، وأحدث التقنيات بأفضل الأسعار في سوريا">
+    <title>متجر WOW للتجميل - أفضل مستحضرات التجميل في سوريا</title>
+    <meta name="description" content="متجر WOW للتجميل - مستحضرات تجميل، عناية بالبشرة، عطور، وأفضل منتجات الجمال بأسعار مناسبة في سوريا">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#"> 
-                <span style="font-size: 1.5rem;">🌟 WOW</span>
-            </a>
-            <div class="d-flex align-items-center">
-                <span class="text-light me-3 d-none d-md-inline">أفضل الأسعار في سوريا</span>
-                <button class="btn btn-outline-light position-relative" onclick="viewCart()">
-                    🛒 السلة 
-                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        0
-                    </span>
-                </button>
+    <!-- Otto-style Header -->
+    <header class="otto-header">
+        <div class="container-fluid">
+            <div class="row align-items-center py-2">
+                <div class="col-2">
+                    <a class="navbar-brand" href="#">
+                        <span class="otto-logo">WOW</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <div class="search-container">
+                        <div class="input-group">
+                            <input type="text" class="form-control otto-search" placeholder="ما الذي تبحثين عنه؟" aria-label="Search">
+                            <button class="btn otto-search-btn" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex align-items-center justify-content-end gap-3">
+                        <div class="header-icon">
+                            <i class="fas fa-user"></i>
+                            <span class="d-none d-md-inline">حسابي</span>
+                        </div>
+                        <div class="header-icon">
+                            <i class="fas fa-heart"></i>
+                            <span class="d-none d-md-inline">المفضلة</span>
+                        </div>
+                        <div class="header-icon position-relative" onclick="viewCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="d-none d-md-inline">السلة</span>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill otto-badge">
+                                0
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Otto-style Navigation -->
+    <nav class="otto-nav">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-pills otto-nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">الصفحة الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">الجمال والعناية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">العناية بالبشرة</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">المكياج</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">العطور</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">العناية بالشعر</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">تخفيضات</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h1 class="display-5 mb-2">🛍️ منتجاتنا المميزة</h1>
-                <p class="lead text-muted">اكتشف أحدث الهواتف الذكية والإكسسوارات بأفضل الأسعار</p>
+    <!-- Otto-style Main Content -->
+    <main class="otto-main">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Otto-style Sidebar -->
+                <div class="col-md-3 col-lg-2 otto-sidebar">
+                    <div class="sidebar-content">
+                        <div class="breadcrumb-section mb-3">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb otto-breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">الصفحة الرئيسية</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">الجمال</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        
+                        <h6 class="sidebar-title">الفئات</h6>
+                        <ul class="list-unstyled otto-category-list">
+                            <li><a href="#" class="category-filter active" data-category="all">جميع المنتجات</a></li>
+                            <li><a href="#" class="category-filter" data-category="العناية بالبشرة">العناية بالبشرة</a> <span class="count">(15)</span></li>
+                            <li><a href="#" class="category-filter" data-category="مكياج العيون">مكياج العيون</a> <span class="count">(8)</span></li>
+                            <li><a href="#" class="category-filter" data-category="أحمر الشفاه">أحمر الشفاه</a> <span class="count">(12)</span></li>
+                            <li><a href="#" class="category-filter" data-category="العطور">العطور</a> <span class="count">(6)</span></li>
+                            <li><a href="#" class="category-filter" data-category="العناية بالشعر">العناية بالشعر</a> <span class="count">(10)</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Main Content Area -->
+                <div class="col-md-9 col-lg-10">
+                    <div class="content-header mb-4">
+                        <h2 class="otto-page-title">الجمال</h2>
+                        <p class="otto-subtitle">منتجات التجميل المميزة</p>
+                    </div>
+                    
+                    <div id="products-container" class="otto-products-grid">
+                        <!-- Products will be loaded here -->
+                    </div>
+                    
+                    <!-- Loading indicator -->
+                    <div id="loading-indicator" class="text-center my-5">
+                        <div class="spinner-border otto-spinner" role="status">
+                            <span class="visually-hidden">جاري التحميل...</span>
+                        </div>
+                        <p class="mt-2 text-muted">جاري تحميل المنتجات...</p>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div id="products-container" class="row">
-            <!-- Products will be loaded here -->
-        </div>
-        
-        <!-- Loading indicator -->
-        <div id="loading-indicator" class="text-center my-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">جاري التحميل...</span>
-            </div>
-            <p class="mt-2 text-muted">جاري تحميل المنتجات...</p>
-        </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/main.js"></script>
